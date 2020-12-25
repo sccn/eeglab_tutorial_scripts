@@ -1,4 +1,4 @@
-%% Scan all datasets in a study
+%% Modify the events of datasets for creating STUDY designs
 
 % load the epoched tutorial dataset
 eeglab_path = fileparts(which('eeglab.m')); % get EEGLAB path

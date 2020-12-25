@@ -1,0 +1,113 @@
+% This LaTeX was auto-generated from MATLAB code.
+% To make changes, update the MATLAB code and export to LaTeX again.
+
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{epstopdf}
+\usepackage{matlab}
+
+\sloppy
+\epstopdfsetup{outdir=./}
+\graphicspath{ {./dipfit_fit_dipole_on_scalp_map_images/} }
+
+\begin{document}
+
+\matlabtitle{Using DIPFIT to fit one dipole to EEG or ERP scalp maps}
+
+\vspace{1em}
+
+\begin{par}
+\begin{flushleft}
+This Live Script shows how to use EEGLAB command-line function to use the DIPFIT plugin to fit dipoles to raw ERP or EEG scalp maps. Note that it can't be done through a time-window, you need to specify a time point.
+\end{flushleft}
+\end{par}
+
+\vspace{1em}
+
+\matlabheadingtwo{Load data}
+
+\begin{matlabcode}
+eeglab; close; % add path
+\end{matlabcode}
+
+\begin{matlabcode}
+eeglabp = fileparts(which('eeglab.m'));
+EEG = pop_loadset(fullfile(eeglabp, 'sample_data', 'eeglab_data_epochs_ica.set'));
+\end{matlabcode}
+
+
+\matlabheadingtwo{Find the 100-ms latency data frame.}
+
+\begin{par}
+\begin{flushleft}
+ Fitting may only be  performed at selected time points, not throughout a time window. 
+\end{flushleft}
+\end{par}
+
+\vspace{1em}
+
+\begin{matlabcode}
+latency = 0.100;
+pt100 = round((latency-EEG.xmin)*EEG.srate);
+\end{matlabcode}
+
+\matlabheadingthree{Find the best-fitting dipole for the ERP scalp map at this timepoint}
+
+\begin{par}
+\hfill \break
+\end{par}
+
+\begin{matlabcode}
+erp = mean(EEG.data(:,:,:), 3);
+dipfitdefs;
+\end{matlabcode}
+
+\matlabheadingtwo{Specify DIPFIT settings using MNI BEM model}
+
+\begin{matlabcode}
+EEG = pop_dipfit_settings( EEG, 'hdmfile',template_models(2).hdmfile,'coordformat',template_models(2).coordformat,...
+    'mrifile',template_models(2).mrifile,'chanfile',template_models(2).chanfile,...
+   'coord_transform',[0.83215 -15.6287 2.4114 0.081214 0.00093739 -1.5732 1.1742 1.0601 1.1485] ,'chansel',[1:32] ); 
+\end{matlabcode}
+
+\begin{matlabcode}
+[ dipole, model, TMPEEG] = dipfit_erpeeg(erp(:,pt100), EEG.chanlocs, 'settings', EEG.dipfit, 'threshold', 100);
+\end{matlabcode}
+
+
+\matlabheadingtwo{Plot the dipole on 3-D map}
+
+\begin{matlabcode}
+pop_dipplot(TMPEEG, 1, 'normlen', 'on');
+\end{matlabcode}
+\begin{matlaboutput}
+No MRI file given as input. Looking up one.
+\end{matlaboutput}
+
+\matlabheadingtwo{Plot the dipole and the scalp map}
+
+\begin{matlabcode}
+figure; pop_topoplot(TMPEEG,0,1, [ 'ERP 100ms, fit with a single dipole (RV ' num2str(dipole(1).rv*100,2) '%)'], 0, 1);
+\end{matlabcode}
+\begin{matlaboutput}
+Plotting...
+\end{matlaboutput}
+\begin{center}
+\includegraphics[width=\maxwidth{58.50476668339187em}]{figure_0}
+\end{center}
+
+\begin{center}
+\includegraphics[width=\maxwidth{59.508278976417465em}]{figure_1}
+\end{center}
+
+
+\end{document}

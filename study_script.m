@@ -1,7 +1,10 @@
 % check folder
 eeglab
-if ~isequal(pwd, fileparts(which('n400.study')))
-    error('You must change the path to the folder containing the data to run this script');
+if ~exist('n400.study', 'file')
+    error([ 'You must change the path to the folder containing the data to run this script' 10 ...
+        'Download the data from https://eeglab.org/tutorials/tutorial_data.html (5 subject study)' ]);
+else
+    cd(fileparts(which('n400.study')));
 end
 
 %% import data and create study

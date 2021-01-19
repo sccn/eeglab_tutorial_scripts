@@ -42,8 +42,8 @@ EEG.comments = pop_comments(EEG.comments,'','Extracted ''square'' epochs [-1 2] 
 eeglab redraw % Update the EEGLAB window to view changes
 
 [ALLEEG EEG CURRENTSET ALLCOM] = eeglab;
-EEG = pop_loadset( 'eeglab_data.set', '/data/matlab/eeglab/sample_data');
-EEG.chanlocs=pop_chanedit(EEG.chanlocs, 'load',{ '/data/matlab/eeglab/sample_data/eeglab_chan32.locs', 'filetype', 'autodetect'});
+EEG = pop_loadset( 'eeglab_data.set', fullfile(eeglab_path, 'sample_data')); 
+EEG.chanlocs=pop_chanedit(EEG.chanlocs, 'load',{ fullfile(eeglab_path, 'sample_data', 'eeglab_chan32.locs'), 'filetype', 'autodetect'});
 EEG = pop_eegfilt( EEG, 1, 0, [], [0]); 
 EEG = pop_reref( EEG, [], 'refstate',0);
 EEG.comments = pop_comments(EEG.comments,'','Dataset was highpass filtered at 1 Hz and rereferenced.',1);

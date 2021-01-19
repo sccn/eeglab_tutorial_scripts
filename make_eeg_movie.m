@@ -18,7 +18,11 @@ figure; [Movie,Colormap] = eegmovie(scalpERP, EEG.srate, EEG.chanlocs, 'framenum
 seemovie(Movie,-5,Colormap);
 
 % save movie
-vidObj = VideoWriter('erpmovie2d.mp4', 'MPEG-4');
+if isunix && ~ismac
+   vidObj = VideoWriter('erpmovie2d.avi', 'Uncompressed AVI');
+else
+   vidObj = VideoWriter('erpmovie2d.mp4', 'MPEG-4');
+end
 open(vidObj);
 writeVideo(vidObj, Movie);
 close(vidObj);
@@ -39,13 +43,21 @@ figure('color', 'w'); [Movie,Colormap] = eegmovie( scalpERP, EEG.srate, EEG.chan
 seemovie(Movie,-5,Colormap);
 
 % save movie
-vidObj = VideoWriter('erpmovie3d1.mp4', 'MPEG-4');
+if isunix && ~ismac
+    vidObj = VideoWriter('erpmovie3d1.avi', 'MPEG-4');
+else
+    vidObj = VideoWriter('erpmovie3d1.mp4', 'MPEG-4');
+end
 open(vidObj);
 writeVideo(vidObj, Movie);
 close(vidObj);
 
 %% Using topoplot to make movie frames
-vidObj = VideoWriter('erpmovietopoplot.mp4', 'MPEG-4');
+if isunix && ~ismac
+   vidObj = VideoWriter('erpmovietopoplot.avi', 'Uncompressed AVI');
+else
+   vidObj = VideoWriter('erpmovietopoplot.mp4', 'MPEG-4');
+end
 open(vidObj);
 counter = 0;
 for latency = -100:10:600 %-100 ms to 1000 ms with 10 time steps

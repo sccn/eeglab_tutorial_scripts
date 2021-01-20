@@ -44,7 +44,7 @@ seemovie(Movie,-5,Colormap);
 
 % save movie
 if isunix && ~ismac
-    vidObj = VideoWriter('erpmovie3d1.avi', 'MPEG-4');
+    vidObj = VideoWriter('erpmovie3d1.avi', 'Uncompressed AVI');
 else
     vidObj = VideoWriter('erpmovie3d1.mp4', 'MPEG-4');
 end

@@ -105,6 +105,7 @@ legend(STUDY.design.variable(1).value)
 setfont(gcf, 'fontsize', 16); % change font size
 
 %% Custom statistics
+[~, erpdata] = std_readdata(STUDY, ALLEEG, 'channels', {ALLEEG(1).chanlocs(1).labels }, 'design', 1, 'datatype', 'erp');
 std_stat(erpdata, 'condstats', 'on', 'mcorrect', 'fdr', 'method', 'permutation')
 std_stat(erpdata, 'condstats', 'on', 'fieldtripmcorrect', 'cluster', 'fieldtripmethod', 'montecarlo', 'mode', 'fieldtrip')
 res = statcond(erpdata); size(res)

@@ -15,7 +15,7 @@ end
 
 % 2-D movie
 figure; [Movie,Colormap] = eegmovie(scalpERP, EEG.srate, EEG.chanlocs, 'framenum', 'off', 'vert', 0, 'startsec', -0.1, 'topoplotopt', {'numcontour' 0});
-seemovie(Movie,-5,Colormap);
+seemovie(Movie,1,Colormap);
 
 % save movie
 if isunix && ~ismac
@@ -40,7 +40,7 @@ headplot('setup', EEG.chanlocs, 'STUDY_headplot.spl', headplotparams{:}); close
 figure; headplot(scalpERP(:,end-50), 'STUDY_headplot.spl', headplotparams{:}, 'maplimits', 'absmax', 'lighting', 'on');
 figure; topoplot(scalpERP(:,end-50), EEG.chanlocs);
 figure('color', 'w'); [Movie,Colormap] = eegmovie( scalpERP, EEG.srate, EEG.chanlocs, 'framenum', 'off', 'vert', 0, 'startsec', -0.1, 'mode', '3d', 'headplotopt', { headplotparams{:}, 'material', 'metal'}, 'camerapath', [-127 2 30 0]); 
-seemovie(Movie,-5,Colormap);
+seemovie(Movie,1,Colormap);
 
 % save movie
 if isunix && ~ismac

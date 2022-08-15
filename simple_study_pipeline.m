@@ -8,7 +8,7 @@ end
 
 % import data
 pop_editoptions( 'option_storedisk', 1); % only one dataset in memory at a time
-[STUDY, ALLEEG] = pop_importbids(filepath, 'studyName','Oddball', 'subjects', [1:2]);
+[STUDY, ALLEEG] = pop_importbids(filepath, 'studyName','Oddball'); %, 'subjects', [1:2]);
 
 % remove non-ALLEEG channels (it is also possible to process ALLEEG data with non-ALLEEG data
 ALLEEG = pop_select( ALLEEG,'nochannel',{'EXG1','EXG2','EXG3','EXG4','EXG5','EXG6','EXG7','EXG8', 'GSR1', 'GSR2', 'Erg1', 'Erg2', 'Resp', 'Plet', 'Temp'});
@@ -17,7 +17,7 @@ ALLEEG = pop_select( ALLEEG,'nochannel',{'EXG1','EXG2','EXG3','EXG4','EXG5','EXG
 ALLEEG = pop_reref( ALLEEG,[]);
 
 % clean data using the clean_rawdata plugin
-ALLEEG = pop_clean_rawdata( ALLEEG,'FlatlineCriterion',5,'ChannelCriterion',0.85, ...
+ALLEEG = pop_clean_rawdata( ALLEEG,'FlatlineCriterion',5,'ChannelCriterion',0.87, ...
     'LineNoiseCriterion',4,'Highpass',[0.25 0.75] ,'BurstCriterion',20, ...
     'WindowCriterion',0.25,'BurstRejection','on','Distance','Euclidian', ...
     'WindowCriterionTolerances',[-Inf 7] ,'fusechanrej',1);
@@ -27,7 +27,7 @@ ALLEEG = pop_clean_rawdata( ALLEEG,'FlatlineCriterion',5,'ChannelCriterion',0.85
 ALLEEG = pop_reref( ALLEEG,[],'interpchan',[]);
 
 % run ICA reducing the dimention by 1 to account for average reference 
-ALLEEG = pop_runica(ALLEEG, 'icatype','runica','concatcond','on','options',{'pca',-1});
+ALLEEG = pop_runica(ALLEEG, 'icatype','picard','concatcond','on','options',{'pca',-1});
 
 % run ICLabel and flag artifactual components
 ALLEEG = pop_iclabel(ALLEEG, 'default');

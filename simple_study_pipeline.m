@@ -8,7 +8,7 @@ end
 
 % import data
 pop_editoptions( 'option_storedisk', 1); % only one dataset in memory at a time
-[STUDY, ALLEEG] = pop_importbids(filepath, 'studyName','Oddball'); %, 'subjects', [1:2]);
+[STUDY, ALLEEG] = pop_importbids(filepath, 'studyName','Oddball', 'subjects', [1:2]); % when using all subjects, one subject is truncated and cause the pipeline to return an error
 
 % remove non-ALLEEG channels (it is also possible to process ALLEEG data with non-ALLEEG data
 ALLEEG = pop_select( ALLEEG,'nochannel',{'EXG1','EXG2','EXG3','EXG4','EXG5','EXG6','EXG7','EXG8', 'GSR1', 'GSR2', 'Erg1', 'Erg2', 'Resp', 'Plet', 'Temp'});

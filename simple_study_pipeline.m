@@ -27,6 +27,7 @@ ALLEEG = pop_clean_rawdata( ALLEEG,'FlatlineCriterion',5,'ChannelCriterion',0.87
 ALLEEG = pop_reref( ALLEEG,[],'interpchan',[]);
 
 % run ICA reducing the dimention by 1 to account for average reference 
+plugin_askinstall('picard', 'picard', 1); % install Picard plugin
 ALLEEG = pop_runica(ALLEEG, 'icatype','picard','concatcond','on','options',{'pca',-1});
 
 % run ICLabel and flag artifactual components

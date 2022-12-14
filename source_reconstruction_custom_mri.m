@@ -16,8 +16,8 @@ clear globals;
 
 % Comment one of the two lines below to process EEG or MEG data
 %chantype = { 'megmag' }; % process MEG megmag channels
-%chantype = { 'megplanar' }; % process MEG megplanar channels
-chantype = { 'eeg' }; % process EEG
+chantype = { 'megplanar' }; % process MEG megplanar channels
+%chantype = { 'eeg' }; % process EEG
 
 % Paths below must be updated to the files on your enviroment.
 dataPath = '/System/Volumes/Data/data/practicalMEEG/Data/ds000117_run1/sub-01';
@@ -28,6 +28,7 @@ filenameMRI = fullfile( dataPath, 'ses-mri','anat','sub-01_ses-mri_acq-mprage_T1
 % Step 1: Importing data with FileIO
 EEG = pop_fileio(filenameEEG);
 EEG = pop_select(EEG, 'chantype', chantype);
+EEG = pop_select(EEG, 'rmchannel', { 'EEG061' 'EEG062' 'EEG063' 'EEG064' }); % remove EOG and EKG channels
 
 % Preprocess and run ICA (so one may be localized)
 EEG = pop_resample(EEG, 100);
@@ -39,8 +40,8 @@ EEG = pop_runica( EEG , 'picard', 'maxiter', 500, 'pca', 20); % PCA not recommen
 % fiducials in MRI space. These are automatically imported as well. 
 % The alignment should always be checked and if necessary adjusted.
 EEG = pop_dipfit_headmodel( EEG, filenameMRI, 'plotmesh', 'scalp');
-EEG2 = pop_dipfit_settings( EEG, 'coord_transform', 'alignfiducials');
+EEG = pop_dipfit_settings( EEG, 'coord_transform', 'alignfiducials');
 
 % Localize first 10 component for speed
-EEG = pop_multifit(EEG, 1:10,'threshold', 100, 'dipplot','off'); 
+EEG = pop_multifit(EEG, 1:20,'threshold', 100, 'dipplot','off'); 
 pop_dipplot(EEG, [], 'normlen', 'on');

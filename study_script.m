@@ -25,7 +25,7 @@ end
     { 'dipselect' 0.15 } });
 
 %% update graphical interface
-CURRENTSTUDY = 1; EEG = ALLEEG;
+CURRENTSTUDY = 1; EEG = ALLEEG; CURRENTSET = 1:length(EEG);
 eeglab redraw;
 
 %% Computing and plotting channel measures

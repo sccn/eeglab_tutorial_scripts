@@ -16,11 +16,12 @@ clear globals;
 
 % Comment one of the two lines below to process EEG or MEG data
 %chantype = { 'megmag' }; % process MEG megmag channels
-chantype = { 'megplanar' }; % process MEG megplanar channels
-%chantype = { 'eeg' }; % process EEG
+%chantype = { 'megplanar' }; % process MEG megplanar channels
+chantype = { 'eeg' }; % process EEG
 
-% Paths below must be updated to the files on your enviroment.
-dataPath = '/System/Volumes/Data/data/practicalMEEG/Data/ds000117_run1/sub-01';
+% Paths below must be updated to the files on your environment.
+dataPath = '/Users/arno/Downloads/sub-01';
+if ~exist(dataPath), error('Data not found; download it from the web site and update the path'); end
 filenameEEG = fullfile( dataPath, 'ses-meg','meg','sub-01_ses-meg_task-facerecognition_run-01_meg.fif');
 filenameFID = fullfile( dataPath, 'ses-meg','meg','sub-01_ses-meg_coordsystem.json');
 filenameMRI = fullfile( dataPath, 'ses-mri','anat','sub-01_ses-mri_acq-mprage_T1w.nii.gz');

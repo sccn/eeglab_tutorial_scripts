@@ -1,6 +1,8 @@
 EEG\ Data\ ep_rtevents.set
 STUDY_headplot.spl
 erpmovie2d.avi
+tmp.set
+tmp.fdt
 error_list.mat
 tmp.spl
 tmp_file.loc
